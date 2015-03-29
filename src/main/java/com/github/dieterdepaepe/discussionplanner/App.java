@@ -1,4 +1,4 @@
-package com.github.dieterdepaepe;
+package com.github.dieterdepaepe.discussionplanner;
 
 /**
  * Hello world!
