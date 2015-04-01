@@ -1,0 +1,32 @@
+package com.github.dieterdepaepe.discussionplanner.solver;
+    dialect "java"
+
+import org.optaplanner.core.api.score.buildin.hardmediumsoft.HardMediumSoftScoreHolder;
+
+import com.github.dieterdepaepe.discussionplanner.domain.SubjectAssignment;
+import com.github.dieterdepaepe.discussionplanner.domain.Participant;
+import com.github.dieterdepaepe.discussionplanner.domain.Subject;
+import com.github.dieterdepaepe.discussionplanner.domain.Location;
+import com.github.dieterdepaepe.discussionplanner.domain.ParticipantAssignment;
+
+global HardMediumSoftScoreHolder scoreHolder;
+
+// ############################################################################
+// Hard constraints
+// ############################################################################
+
+rule "subjectsArentDiscussedMultipleTimes"
+    when
+        SubjectAssignment($id : id, subject != null, $subject : subject)
+        SubjectAssignment(id > $id, subject == $subject)
+    then
+        scoreHolder.addHardConstraintMatch(kcontext, -1);
+end
+
+rule "participantGetPreferredSubject"
+    when
+        ParticipantAssignment($participant : participant, $r : round, $l : location)
+        SubjectAssignment(location == $l, round == $r, $subject : subject)
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext, $participant.dissatisfactionOf($subject));
+end

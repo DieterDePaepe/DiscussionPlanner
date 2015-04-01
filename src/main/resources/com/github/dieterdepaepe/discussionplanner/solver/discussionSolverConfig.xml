@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver>
+  <!--<environmentMode>FAST_ASSERT</environmentMode>-->
+
+  <!-- Domain model configuration -->
+  <solutionClass>com.github.dieterdepaepe.discussionplanner.domain.DiscussionSetup</solutionClass>
+  <entityClass>com.github.dieterdepaepe.discussionplanner.domain.ParticipantAssignment</entityClass>
+  <entityClass>com.github.dieterdepaepe.discussionplanner.domain.SubjectAssignment</entityClass>
+
+  <!-- Score configuration -->
+  <scoreDirectorFactory>
+    <scoreDefinitionType>HARD_MEDIUM_SOFT</scoreDefinitionType>
+    <scoreDrl>com/github/dieterdepaepe/discussionplanner/solver/discussionRules.drl</scoreDrl>
+    <initializingScoreTrend>ONLY_DOWN</initializingScoreTrend>
+  </scoreDirectorFactory>
+
+  <!-- Optimization algorithms configuration -->
+
+  <constructionHeuristic>
+    <queuedEntityPlacer>
+      <entitySelector id="placerEntitySelector">
+        <cacheType>PHASE</cacheType>
+        <entityClass>com.github.dieterdepaepe.discussionplanner.domain.SubjectAssignment</entityClass>
+      </entitySelector>
+      <changeMoveSelector>
+        <entitySelector mimicSelectorRef="placerEntitySelector"/>
+      </changeMoveSelector>
+    </queuedEntityPlacer>
+  </constructionHeuristic>
+  <constructionHeuristic>
+    <queuedEntityPlacer>
+      <entitySelector id="placerEntitySelector">
+        <cacheType>PHASE</cacheType>
+        <entityClass>com.github.dieterdepaepe.discussionplanner.domain.ParticipantAssignment</entityClass>
+      </entitySelector>
+      <changeMoveSelector>
+        <entitySelector mimicSelectorRef="placerEntitySelector"/>
+      </changeMoveSelector>
+    </queuedEntityPlacer>
+  </constructionHeuristic>
+  <!--<localSearch>-->
+    <!--<acceptor>-->
+      <!--<lateAcceptanceSize>500</lateAcceptanceSize>-->
+      <!--&lt;!&ndash;<entityTabuSize>7</entityTabuSize>&ndash;&gt;-->
+    <!--</acceptor>-->
+    <!--<forager>-->
+      <!--&lt;!&ndash;<acceptedCountLimit>1000</acceptedCountLimit>&ndash;&gt;-->
+      <!--<acceptedCountLimit>1</acceptedCountLimit>-->
+    <!--</forager>-->
+  <!--<termination>-->
+    <!--&lt;!&ndash;<secondsSpentLimit>120</secondsSpentLimit>&ndash;&gt;-->
+    <!--<stepCountLimit>100</stepCountLimit>-->
+  <!--</termination>-->
+  <!--</localSearch>-->
+</solver>
