@@ -28,5 +28,5 @@ rule "participantGetPreferredSubject"
         ParticipantAssignment($participant : participant, $r : round, $l : location)
         SubjectAssignment(location == $l, round == $r, $subject : subject)
     then
-        scoreHolder.addSoftConstraintMatch(kcontext, $participant.dissatisfactionOf($subject));
+        scoreHolder.addSoftConstraintMatch(kcontext, $participant.satisfactionOf($subject));
 end

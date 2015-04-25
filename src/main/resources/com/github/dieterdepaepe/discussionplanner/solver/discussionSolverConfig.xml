@@ -11,7 +11,7 @@
   <scoreDirectorFactory>
     <scoreDefinitionType>HARD_MEDIUM_SOFT</scoreDefinitionType>
     <scoreDrl>com/github/dieterdepaepe/discussionplanner/solver/discussionRules.drl</scoreDrl>
-    <initializingScoreTrend>ONLY_DOWN</initializingScoreTrend>
+    <initializingScoreTrend>ANY</initializingScoreTrend>
   </scoreDirectorFactory>
 
   <!-- Optimization algorithms configuration -->

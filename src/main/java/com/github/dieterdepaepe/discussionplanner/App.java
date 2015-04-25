@@ -3,11 +3,11 @@ package com.github.dieterdepaepe.discussionplanner;
 import com.github.dieterdepaepe.discussionplanner.domain.*;
 import com.github.dieterdepaepe.discussionplanner.util.ParticipantAssignmentComparator;
 import com.github.dieterdepaepe.discussionplanner.util.SubjectAssignmentComparator;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Maps;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  *
@@ -83,21 +83,23 @@ public class App {
             String[] splitLine = line.split("\\s*;\\s*");
             if (splitLine.length != subjects.size() + 1)
                 throw new IllegalStateException("Invalid line: \"" + line + "\" (preferences do not match number of subjects)");
-            LinkedHashSet<Subject> preferredSubjects = new LinkedHashSet<>(subjects.size());
+            Map<Subject, Integer> subjectPreferences = Maps.newHashMapWithExpectedSize(subjects.size());
             for (int i = 1; i < splitLine.length; i++) {
-                int subjectIndex;
                 try {
-                    subjectIndex = Integer.parseInt(splitLine[i].trim());
-                    if (subjectIndex <= 0 || subjectIndex > subjects.size())
-                        throw new IllegalArgumentException();
-                    preferredSubjects.add(subjects.get(subjectIndex - 1));
+                    // We translate the human preference, where 1 indicates the highest preference, to a machine score,
+                    // where a higher number indicates a higher preference. Afterwards, we take the power of this number
+                    // to give higher weight to a preference.
+                    // Eg (for 5 subjects): 1 => (5-1)^2 = 16
+                    //                      3 => (5-3)^2 = 4
+                    int humanPreference = Integer.parseInt(splitLine[i].trim());
+                    Preconditions.checkElementIndex(humanPreference - 1, subjects.size());
+                    int preference = subjects.size() - humanPreference;
+                    subjectPreferences.put(subjects.get(i - 1), preference * preference);
                 } catch (IllegalArgumentException e) {
                     throw new IllegalStateException("Invalid line: \"" + line + "\" (invalid preference: \"" + splitLine[i].trim() + "\")");
                 }
             }
-            if (preferredSubjects.size() != subjects.size())
-                throw new IllegalStateException("Invalid line: \"" + line + "\" (duplicate preferences)");
-            participants.add(new Participant(splitLine[0], new ArrayList<>(preferredSubjects)));
+            participants.add(new Participant(splitLine[0], subjectPreferences));
             line = buffReader.readLine();
         }
         return participants;
@@ -131,6 +133,8 @@ public class App {
         System.out.println(PARTICIPANT_START_MARKER);
         System.out.println("Name 1 [; <preference for subject x>]+");
         System.out.println("...");
+        System.out.println();
+        System.out.println("Where <preference for subject x> is the preference for the matching subject (lower number indicates a higher preference)");
         System.exit(-1);
     }
 }
