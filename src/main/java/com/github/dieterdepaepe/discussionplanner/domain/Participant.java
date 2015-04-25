@@ -26,4 +26,9 @@ public class Participant {
         int i = subjectPreference.indexOf(subject);
         return - (i*i);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

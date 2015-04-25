@@ -46,4 +46,8 @@ public class SubjectAssignment {
         this.subject = subject;
     }
 
+    @Override
+    public String toString() {
+        return location.getName() + "-R" + round + "@" + subject;
+    }
 }
