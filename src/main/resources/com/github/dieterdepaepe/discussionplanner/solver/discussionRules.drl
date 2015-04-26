@@ -8,6 +8,7 @@ import com.github.dieterdepaepe.discussionplanner.domain.Participant;
 import com.github.dieterdepaepe.discussionplanner.domain.Subject;
 import com.github.dieterdepaepe.discussionplanner.domain.Location;
 import com.github.dieterdepaepe.discussionplanner.domain.ParticipantAssignment;
+import com.github.dieterdepaepe.discussionplanner.domain.GroupTargetSize;
 
 global HardMediumSoftScoreHolder scoreHolder;
 
@@ -23,10 +24,28 @@ rule "subjectsArentDiscussedMultipleTimes"
         scoreHolder.addHardConstraintMatch(kcontext, -1);
 end
 
+// ############################################################################
+// Soft constraints
+// ############################################################################
+
 rule "participantGetPreferredSubject"
     when
         ParticipantAssignment($participant : participant, $r : round, $l : location)
         SubjectAssignment(location == $l, round == $r, $subject : subject)
     then
-        scoreHolder.addSoftConstraintMatch(kcontext, $participant.satisfactionOf($subject));
+        scoreHolder.addMediumConstraintMatch(kcontext, $participant.satisfactionOf($subject));
+end
+
+rule "groupSizesAreAboutTheSame"
+    when
+        SubjectAssignment($round : round, $location : location)
+        $groupSize : Number() from accumulate(
+            $p : ParticipantAssignment(location == $location, round == $round),
+            count($p)
+        )
+        GroupTargetSize($targetGroupSize : number)
+
+    then
+        int penalty = Math.abs($groupSize.intValue() - $targetGroupSize);
+        scoreHolder.addSoftConstraintMatch(kcontext, -penalty * penalty);
 end

@@ -6,9 +6,7 @@ import org.optaplanner.core.api.domain.solution.Solution;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
 import org.optaplanner.core.api.score.buildin.hardmediumsoft.HardMediumSoftScore;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  *
@@ -81,10 +79,11 @@ public class DiscussionSetup implements Solution<HardMediumSoftScore> {
 
     @Override
     public Collection<?> getProblemFacts() {
-        return Arrays.asList(
-            participants,
-            subjects,
-            locations
-        );
+        List<Object> facts = new ArrayList<>();
+        facts.add(new GroupTargetSize(participantAssignments.size() / subjectAssignments.size()));
+        facts.addAll(participants);
+        facts.addAll(subjects);
+        facts.addAll(locations);
+        return facts;
     }
 }
