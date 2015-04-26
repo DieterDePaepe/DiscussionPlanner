@@ -39,17 +39,34 @@
     </queuedEntityPlacer>
   </constructionHeuristic>
   <!--<localSearch>-->
+    <!--<unionMoveSelector>-->
+      <!--<cacheType>PHASE</cacheType>-->
+      <!--<selectionOrder>ORIGINAL</selectionOrder>-->
+      <!--&lt;!&ndash;<selectionOrder>SHUFFLED</selectionOrder>&ndash;&gt;-->
+      <!--<changeMoveSelector>-->
+        <!--<entitySelector>-->
+          <!--<entityClass>com.github.dieterdepaepe.discussionplanner.domain.ParticipantAssignment</entityClass>-->
+        <!--</entitySelector>-->
+      <!--</changeMoveSelector>-->
+      <!--<swapMoveSelector>-->
+        <!--<entitySelector>-->
+          <!--<entityClass>com.github.dieterdepaepe.discussionplanner.domain.SubjectAssignment</entityClass>-->
+        <!--</entitySelector>-->
+        <!--<filterClass>com.github.dieterdepaepe.discussionplanner.util.DifferentRoundsSwapMoveFilter</filterClass>-->
+      <!--</swapMoveSelector>-->
+    <!--</unionMoveSelector>-->
+
     <!--<acceptor>-->
-      <!--<lateAcceptanceSize>500</lateAcceptanceSize>-->
-      <!--&lt;!&ndash;<entityTabuSize>7</entityTabuSize>&ndash;&gt;-->
+      <!--&lt;!&ndash;<lateAcceptanceSize>500</lateAcceptanceSize>&ndash;&gt;-->
+      <!--<entityTabuSize>7</entityTabuSize>-->
     <!--</acceptor>-->
     <!--<forager>-->
-      <!--&lt;!&ndash;<acceptedCountLimit>1000</acceptedCountLimit>&ndash;&gt;-->
-      <!--<acceptedCountLimit>1</acceptedCountLimit>-->
+      <!--<acceptedCountLimit>1000</acceptedCountLimit>-->
+      <!--&lt;!&ndash;<acceptedCountLimit>1</acceptedCountLimit>&ndash;&gt;-->
     <!--</forager>-->
-  <!--<termination>-->
-    <!--&lt;!&ndash;<secondsSpentLimit>120</secondsSpentLimit>&ndash;&gt;-->
-    <!--<stepCountLimit>100</stepCountLimit>-->
-  <!--</termination>-->
+    <!--<termination>-->
+      <!--<secondsSpentLimit>30</secondsSpentLimit>-->
+      <!--&lt;!&ndash;<unimprovedStepCountLimit>10</unimprovedStepCountLimit>&ndash;&gt;-->
+    <!--</termination>-->
   <!--</localSearch>-->
 </solver>
