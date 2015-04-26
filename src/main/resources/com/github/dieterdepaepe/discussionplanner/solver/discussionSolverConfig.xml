@@ -38,35 +38,35 @@
       </changeMoveSelector>
     </queuedEntityPlacer>
   </constructionHeuristic>
-  <!--<localSearch>-->
-    <!--<unionMoveSelector>-->
-      <!--<cacheType>PHASE</cacheType>-->
-      <!--<selectionOrder>ORIGINAL</selectionOrder>-->
-      <!--&lt;!&ndash;<selectionOrder>SHUFFLED</selectionOrder>&ndash;&gt;-->
-      <!--<changeMoveSelector>-->
-        <!--<entitySelector>-->
-          <!--<entityClass>com.github.dieterdepaepe.discussionplanner.domain.ParticipantAssignment</entityClass>-->
-        <!--</entitySelector>-->
-      <!--</changeMoveSelector>-->
-      <!--<swapMoveSelector>-->
-        <!--<entitySelector>-->
-          <!--<entityClass>com.github.dieterdepaepe.discussionplanner.domain.SubjectAssignment</entityClass>-->
-        <!--</entitySelector>-->
-        <!--<filterClass>com.github.dieterdepaepe.discussionplanner.util.DifferentRoundsSwapMoveFilter</filterClass>-->
-      <!--</swapMoveSelector>-->
-    <!--</unionMoveSelector>-->
+  <localSearch>
+    <unionMoveSelector>
+      <cacheType>PHASE</cacheType>
+      <selectionOrder>ORIGINAL</selectionOrder>
+      <!--<selectionOrder>SHUFFLED</selectionOrder>-->
+      <changeMoveSelector>
+        <entitySelector>
+          <entityClass>com.github.dieterdepaepe.discussionplanner.domain.ParticipantAssignment</entityClass>
+        </entitySelector>
+      </changeMoveSelector>
+      <swapMoveSelector>
+        <entitySelector>
+          <entityClass>com.github.dieterdepaepe.discussionplanner.domain.SubjectAssignment</entityClass>
+        </entitySelector>
+        <filterClass>com.github.dieterdepaepe.discussionplanner.util.DifferentRoundsSwapMoveFilter</filterClass>
+      </swapMoveSelector>
+    </unionMoveSelector>
 
-    <!--<acceptor>-->
-      <!--&lt;!&ndash;<lateAcceptanceSize>500</lateAcceptanceSize>&ndash;&gt;-->
-      <!--<entityTabuSize>7</entityTabuSize>-->
-    <!--</acceptor>-->
-    <!--<forager>-->
-      <!--<acceptedCountLimit>1000</acceptedCountLimit>-->
-      <!--&lt;!&ndash;<acceptedCountLimit>1</acceptedCountLimit>&ndash;&gt;-->
-    <!--</forager>-->
-    <!--<termination>-->
-      <!--<secondsSpentLimit>30</secondsSpentLimit>-->
-      <!--&lt;!&ndash;<unimprovedStepCountLimit>10</unimprovedStepCountLimit>&ndash;&gt;-->
-    <!--</termination>-->
-  <!--</localSearch>-->
+    <acceptor>
+      <!--<lateAcceptanceSize>500</lateAcceptanceSize>-->
+      <entityTabuSize>7</entityTabuSize>
+    </acceptor>
+    <forager>
+      <acceptedCountLimit>1000</acceptedCountLimit>
+      <!--<acceptedCountLimit>1</acceptedCountLimit>-->
+    </forager>
+    <termination>
+      <!--<secondsSpentLimit>10</secondsSpentLimit>-->
+      <unimprovedStepCountLimit>1000</unimprovedStepCountLimit>
+    </termination>
+  </localSearch>
 </solver>
